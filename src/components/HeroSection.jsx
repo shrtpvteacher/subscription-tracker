@@ -161,5 +161,6 @@ export function HeroSection() {
         initialMode={authMode}
       />
     </>
+  )
   );
 }
