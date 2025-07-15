@@ -25,6 +25,7 @@ import { AddSubscriptionDialog } from './AddSubscriptionDialog';
 import { SubscriptionScanner } from './SubscriptionScanner';
 import { ChangeSubscriptionDialog } from './ChangeSubscriptionDialog';
 import { SubscriptionCard } from './SubscriptionCard';
+import { CallToActionSection } from './CallToActionSection';
 import { toast } from '../hooks/use-toast';
 
 export function LandingPage() {
@@ -672,6 +673,9 @@ export function LandingPage() {
           subscription={selectedSubscription}
         />
       </div>
+
+      {/* Call to Action Section */}
+      <CallToActionSection />
     </div>
   );
 }
