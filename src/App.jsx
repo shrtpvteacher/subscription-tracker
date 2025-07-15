@@ -1,35 +1,37 @@
-import { useState } from 'react';
-import { Navigation } from './components/Navigation';
-import { LandingPage } from './components/LandingPage';
-import { PaymentAccounts } from './components/PaymentAccounts';
-import { Analytics } from './components/Analytics';
-import { Settings } from './components/Settings';
+import { AuthProvider, useAuth } from './hooks/useAuth';
+import { HeroSection } from './components/HeroSection';
+import { UserDashboard } from './components/UserDashboard';
 import { Toaster } from './components/ui/toaster';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('dashboard');
+function AppContent() {
+  const { user, loading } = useAuth();
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'dashboard':
-        return <LandingPage />;
-      case 'accounts':
-        return <PaymentAccounts />;
-      case 'analytics':
-        return <Analytics />;
-      case 'settings':
-        return <Settings />;
-      default:
-        return <LandingPage />;
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <div className="w-6 h-6 bg-white rounded-full"></div>
+          </div>
+          <p className="text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
-      <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
-      {renderPage()}
+      {user ? <UserDashboard /> : <HeroSection />}
       <Toaster />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
